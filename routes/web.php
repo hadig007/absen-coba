@@ -19,7 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home',[HomeController::class,'index'])->name('home');
 Route::get('/login',[LoginController::class,'login'])->name('login');
 Route::post('/postlogin',[LoginController::class,'postlogin'])->name('postlogin');
 Route::get('/logout',[LoginController::class,'logout'])->name('logout');
+
+Route::group(['middleware' => ['auth','ceklevel:admin,karyawan']],function(){
+    Route::get('/home',[HomeController::class,'index'])->name('home');
+});
